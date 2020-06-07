@@ -11,20 +11,8 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="27dp"
+            android:layout_marginStart="15dp"
             android:textColor="@color/colorTextPrimary"
-    />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/food_list_item_emoji"
-            android:text="@string/example_emoji"
-            android:textSize="12sp"
-            android:layout_below="@id/food_list_item_name"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="27dp"
-            android:textColor="@color/colorTextGrey"
     />
 
     <TextView
@@ -34,9 +22,8 @@
             android:text="@string/example_ingredients"
             android:textSize="12sp"
             android:layout_below="@id/food_list_item_name"
-            android:layout_toRightOf="@id/food_list_item_emoji"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorTextGrey"
     />

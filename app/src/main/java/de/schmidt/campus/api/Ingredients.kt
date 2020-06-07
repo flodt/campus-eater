@@ -54,4 +54,15 @@ object Ingredients {
         "Sw" to R.string.with_sulfur_dioxide,
         "Wt" to R.string.with_mollusks
     )
+
+    val emoji: Map<String, String> = mapOf(
+        "99" to "\uD83C\uDF77",
+        "S" to "\uD83D\uDC37",
+        "R" to "\uD83D\uDC2E",
+        "Ei" to "\uD83E\uDD5A",
+        "En" to "\uD83E\uDD5C",
+        "Fi" to "\uD83D\uDC1F",
+        "GlW" to "\uD83C\uDF3E",
+        "Mi" to "\uD83E\uDD5B"
+    )
 }
