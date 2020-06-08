@@ -1,8 +1,13 @@
 package de.schmidt.campus.api
 
+import android.content.Context
 import de.schmidt.campus.R
 
+private const val PREF_KEY = "CampusEater"
+
 object Ingredients {
+    private val allergens: MutableList<String> = mutableListOf()
+
     val ingredients: Map<String, Int> = mapOf(
         "GQB" to R.string.bavaria_quality,
         "MSC" to R.string.marine_stewardship,
@@ -65,4 +70,30 @@ object Ingredients {
         "GlW" to "\uD83C\uDF3E",
         "Mi" to "\uD83E\uDD5B"
     )
+
+    private fun loadFromPrefs(context: Context) {
+        context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE)
+            .getString(context.getString(R.string.pref_key_allergens), "")
+            ?.split(",")
+            ?.apply {
+                allergens.clear()
+                allergens.addAll(this)
+            }
+    }
+
+    private fun saveToPrefs(context: Context) {
+        context
+            .getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE)
+            .edit()
+            .putString(context.getString(R.string.pref_key_allergens), allergens.joinToString(separator = ","))
+            .apply()
+    }
+
+    fun containsAllergens(dish: Dish): Boolean = allergens.intersect(dish.ingredients).isNotEmpty()
+
+    fun setAllergens(newData: List<String>, context: Context) {
+        allergens.clear()
+        allergens.addAll(newData)
+        saveToPrefs(context)
+    }
 }

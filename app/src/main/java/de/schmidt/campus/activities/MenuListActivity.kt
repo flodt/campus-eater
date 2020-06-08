@@ -50,6 +50,9 @@ class MenuListActivity : AppCompatActivity() {
 
             Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
         }
+
+        //todo set ingredients
+        Ingredients.setAllergens(listOf("Mi"), this)
     }
 
     override fun onResume() {

@@ -2,6 +2,7 @@ package de.schmidt.campus.view
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,20 @@ class DishListViewAdapter constructor(
 
         //fill with dish data
         val dish: Dish = getItem(position) as Dish
-        name?.text = dish.name
+
+        if (Ingredients.containsAllergens(dish)) {
+            name?.apply {
+                //set the name with allergens
+                text = "❌ ${dish.name}"
+                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            }
+        } else {
+            //remove strikethrough
+            name?.apply {
+                text = dish.name
+                paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+        }
 
         var emojified = dish.ingredients.mapNotNull { Ingredients.emoji[it] }.joinToString(separator = "")
         if (emojified != "") emojified += " "
