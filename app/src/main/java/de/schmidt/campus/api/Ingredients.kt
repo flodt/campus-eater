@@ -2,9 +2,8 @@ package de.schmidt.campus.api
 
 import android.content.Context
 import de.schmidt.campus.R
+import de.schmidt.campus.utils.PREF_KEY
 import de.schmidt.campus.utils.colorWithHtml
-
-private const val PREF_KEY = "CampusEater"
 
 object Ingredients {
     private val allergenWarnings: MutableList<String> = mutableListOf()
