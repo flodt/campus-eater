@@ -29,7 +29,7 @@ class MenuListActivity : AppCompatActivity() {
         adapter = DishListViewAdapter(this, dishes)
         listView.adapter = adapter
         listView.isClickable = true
-        listView.setOnItemClickListener { parent, view, position, id ->
+        listView.setOnItemClickListener { _, _, position, _ ->
             //get the tapped dish
             val dish = dishes[position]
             val builder = StringBuilder()
@@ -48,11 +48,14 @@ class MenuListActivity : AppCompatActivity() {
                 }
             )
 
+            builder.append(dish.ingredients.joinToString { Ingredients.flagAllergensIn(it, this) })
+
             Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
         }
 
         //todo set ingredients
-        Ingredients.setAllergens(listOf("Mi"), this)
+        Ingredients.setAllergenWarnings(listOf("Mi"), this)
+        Ingredients.setAllergenCautions(listOf("Kn"), this)
     }
 
     override fun onResume() {

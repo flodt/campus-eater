@@ -2,11 +2,13 @@ package de.schmidt.campus.api
 
 import android.content.Context
 import de.schmidt.campus.R
+import de.schmidt.campus.utils.colorWithHtml
 
 private const val PREF_KEY = "CampusEater"
 
 object Ingredients {
-    private val allergens: MutableList<String> = mutableListOf()
+    private val allergenWarnings: MutableList<String> = mutableListOf()
+    private val allergenCautions: MutableList<String> = mutableListOf()
 
     val ingredients: Map<String, Int> = mapOf(
         "GQB" to R.string.bavaria_quality,
@@ -71,29 +73,69 @@ object Ingredients {
         "Mi" to "\uD83E\uDD5B"
     )
 
-    private fun loadFromPrefs(context: Context) {
+    private fun loadCautionsFromPrefs(context: Context) {
+        context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE)
+            .getString(context.getString(R.string.pref_key_cautionary), "")
+            ?.split(",")
+            ?.apply {
+                allergenCautions.clear()
+                allergenCautions.addAll(this)
+            }
+    }
+
+    private fun loadWarningsFromPrefs(context: Context) {
         context.getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE)
             .getString(context.getString(R.string.pref_key_allergens), "")
             ?.split(",")
             ?.apply {
-                allergens.clear()
-                allergens.addAll(this)
+                allergenWarnings.clear()
+                allergenWarnings.addAll(this)
             }
     }
 
-    private fun saveToPrefs(context: Context) {
+    private fun saveWarningsToPrefs(context: Context) {
         context
             .getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE)
             .edit()
-            .putString(context.getString(R.string.pref_key_allergens), allergens.joinToString(separator = ","))
+            .putString(context.getString(R.string.pref_key_allergens), allergenWarnings.joinToString(separator = ","))
             .apply()
     }
 
-    fun containsAllergens(dish: Dish): Boolean = allergens.intersect(dish.ingredients).isNotEmpty()
+    private fun saveCautionsToPrefs(context: Context) {
+        context
+            .getSharedPreferences(PREF_KEY, Context.MODE_PRIVATE)
+            .edit()
+            .putString(context.getString(R.string.pref_key_cautionary), allergenCautions.joinToString(separator = ","))
+            .apply()
+    }
 
-    fun setAllergens(newData: List<String>, context: Context) {
-        allergens.clear()
-        allergens.addAll(newData)
-        saveToPrefs(context)
+    fun containsAllergenWarnings(dish: Dish): Boolean = allergenWarnings.intersect(dish.ingredients).isNotEmpty()
+
+    fun containsAllergenCautions(dish: Dish): Boolean = allergenCautions.intersect(dish.ingredients).isNotEmpty()
+
+    fun setAllergenWarnings(newData: List<String>, context: Context) {
+        allergenWarnings.clear()
+        allergenWarnings.addAll(newData)
+        saveWarningsToPrefs(context)
+    }
+
+    fun setAllergenCautions(newData: List<String>, context: Context) {
+        allergenCautions.clear()
+        allergenCautions.addAll(newData)
+        saveCautionsToPrefs(context)
+    }
+
+    fun flagAllergensIn(string: String, context: Context): String {
+        return when {
+            allergenWarnings.contains(string) -> {
+                string.colorWithHtml(context, R.color.allergen_warning)
+            }
+            allergenCautions.contains(string) -> {
+                string.colorWithHtml(context, R.color.allergen_caution)
+            }
+            else -> {
+                string.colorWithHtml(context, R.color.colorTextGrey)
+            }
+        }
     }
 }

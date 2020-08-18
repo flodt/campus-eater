@@ -3,6 +3,7 @@ package de.schmidt.campus.view
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Paint
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ class DishListViewAdapter constructor(
         //fill with dish data
         val dish: Dish = getItem(position) as Dish
 
-        if (Ingredients.containsAllergens(dish)) {
+        if (Ingredients.containsAllergenWarnings(dish)) {
             name?.apply {
                 //set the name with allergens
                 text = "❌ ${dish.name}"
@@ -41,11 +42,12 @@ class DishListViewAdapter constructor(
             }
         }
 
+        //emojify and tag ingredients by color according to allergen settings
         var emojified = dish.ingredients.mapNotNull { Ingredients.emoji[it] }.joinToString(separator = "")
         if (emojified != "") emojified += " "
-        emojified += dish.ingredients.joinToString(separator = ", ")
+        emojified += dish.ingredients.joinToString(separator = ", ") { Ingredients.flagAllergensIn(it, context) }
 
-        ingredients?.text = emojified
+        ingredients?.text = Html.fromHtml(emojified)
 
         return view
     }

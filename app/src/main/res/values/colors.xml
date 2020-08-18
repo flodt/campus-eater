@@ -11,4 +11,7 @@
     <color name="colorTextSecondary">#ffffff</color>
     <color name="background">#ffffff</color>
     <color name="background_shade">#fafafa</color>
+    <color name="background_shade_dark">#eaeaea</color>
+    <color name="allergen_warning">#E53935</color>
+    <color name="allergen_caution">#FF8F00</color>
 </resources>
