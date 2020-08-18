@@ -34,6 +34,7 @@ class DishListViewAdapter constructor(
                 text = "❌ ${dish.name}"
                 paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
+            view.setBackgroundColor(context.resources.getColor(R.color.background_shade))
         } else {
             //remove strikethrough
             name?.apply {
