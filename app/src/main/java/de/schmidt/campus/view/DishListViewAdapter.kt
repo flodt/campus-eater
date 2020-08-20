@@ -12,6 +12,7 @@ import android.widget.TextView
 import de.schmidt.campus.R
 import de.schmidt.campus.api.Dish
 import de.schmidt.campus.api.Ingredients
+import de.schmidt.campus.utils.orIfBlank
 
 class DishListViewAdapter constructor(
     private val context: Activity,
@@ -52,9 +53,12 @@ class DishListViewAdapter constructor(
         }
 
         //emojify and tag ingredients by color according to allergen settings
-        var emojified = dish.ingredients.mapNotNull { Ingredients.emoji[it] }.joinToString(separator = "")
-        if (emojified != "") emojified += " "
-        emojified += dish.ingredients.joinToString(separator = ", ") { Ingredients.flagAllergensIn(it, context) }
+        var emojified = "\uD83C\uDF74" + dish.ingredients.mapNotNull { Ingredients.emoji[it] }.joinToString(separator = "")
+        if (emojified != "\uD83C\uDF74") emojified += " "
+        emojified += dish
+            .ingredients
+            .joinToString(separator = ", ") { Ingredients.flagAllergensIn(it, context) }
+            .orIfBlank("–")
 
         ingredients?.text = Html.fromHtml(emojified)
 

@@ -59,7 +59,7 @@ class MenuListActivity : AppCompatActivity() {
 
         //todo set ingredients for allergen notes
         Ingredients.setAllergenWarnings(listOf("Mi"), this)
-        Ingredients.setAllergenCautions(listOf("Sl"), this)
+        Ingredients.setAllergenCautions(listOf("Kn"), this)
     }
 
     private fun onDishClicked(position: Int) {
