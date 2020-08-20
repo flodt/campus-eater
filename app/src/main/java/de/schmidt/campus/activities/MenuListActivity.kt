@@ -45,6 +45,14 @@ class MenuListActivity : AppCompatActivity() {
         floatingActionButton = findViewById(R.id.menu_list_fab_date)
         floatingActionButton.setOnClickListener { onFabInvokeDatePicker() }
 
+        //for debugging purposes: todo remove later
+        floatingActionButton.isLongClickable = true
+        floatingActionButton.setOnLongClickListener {
+            currentDate = GregorianCalendar(2019, 11, 19).time
+            refresh()
+            true
+        }
+
         //setup swipe refresh layout
         swipeRefresh = findViewById(R.id.menu_list_swipe_refresh)
         swipeRefresh.setColorSchemeResources(R.color.colorAccent)
