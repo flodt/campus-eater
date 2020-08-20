@@ -81,9 +81,7 @@ class MenuListActivity : AppCompatActivity() {
             }
         )
 
-        //todo figure out how to color this
-        builder.append(dish.ingredients.joinToString { Ingredients.flagAllergensIn(it, this) })
-
+        //later create a custom toast with colored allergens
         Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
     }
 
