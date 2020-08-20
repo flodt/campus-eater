@@ -19,6 +19,7 @@ import de.schmidt.campus.api.Request
 import de.schmidt.campus.view.DishListViewAdapter
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.absoluteValue
 
 class MenuListActivity : AppCompatActivity() {
     private var dishes: MutableList<Dish> = mutableListOf()
@@ -170,6 +171,17 @@ class MenuListActivity : AppCompatActivity() {
         Locations.names[Locations.getSelectedLocation(this)]?.let { setTitle(it) }
 
         //set the date correctly
-        currentDateView.text = SimpleDateFormat("EEEE, dd.MMMM.yyyy").format(currentDate)
+        var formatted = SimpleDateFormat("EEEE, dd. MMMM yyyy").format(currentDate)
+        val deltaDays = ((currentDate.time - Date().time) / (24 * 60 * 60 * 1000)).toInt()
+
+        if (deltaDays.absoluteValue <= 31) {
+            formatted += when {
+                (deltaDays > 0) -> " (in $deltaDays days)"
+                (deltaDays < 0) -> " (${-deltaDays} days ago)"
+                else -> " (Today)"
+            }
+        }
+
+        currentDateView.text = formatted
     }
 }
