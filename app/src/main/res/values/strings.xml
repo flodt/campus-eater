@@ -9,6 +9,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- ingredients -->
     <string name="bavaria_quality">Certified Quality - Bavaria</string>
     <string name="marine_stewardship">Marine Stewardship Council</string>
     <string name="with_dyestuff">with dyestuff</string>
@@ -64,4 +66,46 @@
     <string name="pref_key_allergens">CAMPUS_ALLERGENS</string>
     <string name="pref_key_cautionary">CAMPUS_ALLERGEN_CAUTIONS</string>
     <string name="pref_key_location">CAMPUS_LOCATION</string>
+
+    <!-- locations -->
+    <string name="full_mensa_arcisstr">Mensa Arcisstraße</string>
+    <string name="full_mensa_garching">Mensa Garching</string>
+    <string name="full_mensa_leopoldstr">Mensa Leopoldstraße</string>
+    <string name="full_mensa_lothstr">Mensa Lothstraße</string>
+    <string name="full_mensa_martinsried">Mensa Martinsried</string>
+    <string name="full_mensa_pasing">Mensa Pasing</string>
+    <string name="full_mensa_weihenstephan">Mensa Weihenstephan</string>
+    <string name="full_stubistro_arcisstr">StuBistro Arcisstraße</string>
+    <string name="full_stubistro_goethestr">StuBistro Goethestraße</string>
+    <string name="full_stubistro_grosshadern">StuBistro Großhadern</string>
+    <string name="full_stubistro_rosenheim">StuBistro Rosenheim</string>
+    <string name="full_stubistro_schellingstr">StuBistro Schellingstraße</string>
+    <string name="full_stucafe_adalbertstr">StuCafé Adalbertstraße</string>
+    <string name="full_stucafe_akademie_weihenstephan">StuCafé Akademie Weihenstephan</string>
+    <string name="full_stucafe_boltzmannstr">StuCafé Boltzmannstraße</string>
+    <string name="full_stucafe_garching">StuCafé in der Mensa Garching</string>
+    <string name="full_stucafe_karlstr">StuCafé Karlstraße</string>
+    <string name="full_stucafe_pasing">StuCafé Pasing</string>
+    <string name="full_fmi_bistro">FMI Bistro Garching</string>
+    <string name="full_ipp_bistro">IPP Bistro Garching</string>
+    <string name="short_mensa_arcisstr">mensa-arcisstr</string>
+    <string name="short_mensa_garching">mensa-garching</string>
+    <string name="short_mensa_leopoldstr">mensa-leopoldstr</string>
+    <string name="short_mensa_lothstr">mensa-lothstr</string>
+    <string name="short_mensa_martinsried">mensa-martinsried</string>
+    <string name="short_mensa_pasing">mensa-pasing</string>
+    <string name="short_mensa_weihenstephan">mensa-weihenstephan</string>
+    <string name="short_stubistro_arcisstr">stubistro-arcisstr</string>
+    <string name="short_stubistro_goethestr">stubistro-goethestr</string>
+    <string name="short_stubistro_grosshadern">stubistro-grosshadern</string>
+    <string name="short_stubistro_rosenheim">stubistro-rosenheim</string>
+    <string name="short_stubistro_schellingstr">stubistro-schellingstr</string>
+    <string name="short_stucafe_adalbertstr">stucafe-adalbertstr</string>
+    <string name="short_stucafe_akademie_weihenstephan">stucafe-akademie-weihenstephan</string>
+    <string name="short_stucafe_boltzmannstr">stucafe-boltzmannstr</string>
+    <string name="short_stucafe_garching">stucafe-garching</string>
+    <string name="short_stucafe_karlstr">stucafe-karlstr</string>
+    <string name="short_stucafe_pasing">stucafe-pasing</string>
+    <string name="short_fmi_bistro">fmi-bistro</string>
+    <string name="short_ipp_bistro">ipp-bistro</string>
 </resources>

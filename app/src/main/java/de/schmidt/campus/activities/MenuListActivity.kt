@@ -8,6 +8,7 @@ import android.widget.Toast
 import de.schmidt.campus.R
 import de.schmidt.campus.api.Dish
 import de.schmidt.campus.api.Ingredients
+import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request
 import de.schmidt.campus.view.DishListViewAdapter
 import java.lang.StringBuilder
@@ -53,14 +54,19 @@ class MenuListActivity : AppCompatActivity() {
             Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
         }
 
-        //todo set ingredients
+        //todo set ingredients for allergen notes
         Ingredients.setAllergenWarnings(listOf("Mi"), this)
         Ingredients.setAllergenCautions(listOf("Kn"), this)
     }
 
     override fun onResume() {
         super.onResume()
-        Request.getWeeklyMenu("mensa-garching", 2019, 51) {
+
+        val selectedLocation = getString(Locations.getSelectedLocation(this))
+        val selectedYear = 2019
+        val selectedWeek = 51
+
+        Request.getWeeklyMenu(mensa = selectedLocation, year = selectedYear, weekNumber = selectedWeek) {
             runOnUiThread {
                 Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
                 //todo build date selection logic into here
@@ -71,10 +77,14 @@ class MenuListActivity : AppCompatActivity() {
     }
 
     private fun updateUI(newData: List<Dish>) {
+        //update list view via adapter
         dishes.clear()
         dishes.addAll(newData)
         adapter.notifyDataSetChanged()
         listView.invalidateViews()
         listView.refreshDrawableState()
+
+        //set title correctly
+        Locations.names[Locations.getSelectedLocation(this)]?.let { setTitle(it) }
     }
 }
