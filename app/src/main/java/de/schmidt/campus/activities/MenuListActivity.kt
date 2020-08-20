@@ -1,29 +1,49 @@
 package de.schmidt.campus.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.schmidt.campus.R
 import de.schmidt.campus.api.Dish
 import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request
 import de.schmidt.campus.view.DishListViewAdapter
-import java.lang.StringBuilder
 
 class MenuListActivity : AppCompatActivity() {
-    //todo implement a listview here which displays the food for specific days
-    //only show today's plan first in the list, allow changing via fab
     private var dishes: MutableList<Dish> = mutableListOf()
     private lateinit var listView: ListView
     private lateinit var adapter: DishListViewAdapter
+
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var currentDate: TextView
+
+    private lateinit var floatingActionButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Campus"
         setContentView(R.layout.activity_menu_list)
+
+        //get current date text field
+        currentDate = findViewById(R.id.menu_list_date)
+
+        //setup fab for date choosing
+        floatingActionButton = findViewById(R.id.menu_list_fab_date)
+        floatingActionButton.setOnClickListener {
+            runOnUiThread {
+                Toast.makeText(this, "Select date...", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //setup swipe refresh layout
+        swipeRefresh = findViewById(R.id.menu_list_swipe_refresh)
+        swipeRefresh.setOnRefreshListener { refresh() }
 
         //setup ListView
         listView = findViewById(R.id.food_list)
@@ -61,16 +81,21 @@ class MenuListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        refresh()
+    }
+
+    private fun refresh() {
+        runOnUiThread { swipeRefresh.isRefreshing = true }
 
         val selectedLocation = getString(Locations.getSelectedLocation(this))
         val selectedYear = 2019
         val selectedWeek = 51
+        val selectedWeekDay = 0
 
-        Request.getWeeklyMenu(mensa = selectedLocation, year = selectedYear, weekNumber = selectedWeek) {
+        Request.getWeeklyMenu(selectedLocation, selectedYear, selectedWeek) {
             runOnUiThread {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-                //todo build date selection logic into here
-                updateUI(it.days[0].dishes)
+                updateUI(it.days[selectedWeekDay].dishes)
+                swipeRefresh.isRefreshing = false
             }
             Log.v("MenuListActivity", it.toString())
         }
