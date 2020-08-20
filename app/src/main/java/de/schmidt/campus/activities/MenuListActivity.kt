@@ -1,5 +1,6 @@
 package de.schmidt.campus.activities
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,6 +17,8 @@ import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request
 import de.schmidt.campus.view.DishListViewAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MenuListActivity : AppCompatActivity() {
     private var dishes: MutableList<Dish> = mutableListOf()
@@ -23,7 +26,8 @@ class MenuListActivity : AppCompatActivity() {
     private lateinit var adapter: DishListViewAdapter
 
     private lateinit var swipeRefresh: SwipeRefreshLayout
-    private lateinit var currentDate: TextView
+    private lateinit var currentDateView: TextView
+    private lateinit var currentDate: Date
 
     private lateinit var floatingActionButton: FloatingActionButton
 
@@ -33,14 +37,30 @@ class MenuListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu_list)
 
         //get current date text field
-        currentDate = findViewById(R.id.menu_list_date)
+        currentDate = Date()
+        currentDateView = findViewById(R.id.menu_list_date)
 
         //setup fab for date choosing
         floatingActionButton = findViewById(R.id.menu_list_fab_date)
         floatingActionButton.setOnClickListener {
-            runOnUiThread {
-                Toast.makeText(this, "Select date...", Toast.LENGTH_SHORT).show()
+            //setup dialog with current date and time
+            val cal = Calendar.getInstance()
+            cal.time = currentDate
+
+            val listener: DatePickerDialog.OnDateSetListener
+                    = DatePickerDialog.OnDateSetListener() { _, year, month, dayOfMonth ->
+                currentDate = GregorianCalendar(year, month - 1, dayOfMonth).time
             }
+
+            val picker = DatePickerDialog(
+                this,
+                listener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
+
+            picker.show()
         }
 
         //setup swipe refresh layout
@@ -72,6 +92,7 @@ class MenuListActivity : AppCompatActivity() {
                 }
             )
 
+            //todo figure out how to color this
             builder.append(dish.ingredients.joinToString { Ingredients.flagAllergensIn(it, this) })
 
             Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
@@ -106,9 +127,12 @@ class MenuListActivity : AppCompatActivity() {
         runOnUiThread { swipeRefresh.isRefreshing = true }
 
         val selectedLocation = getString(Locations.getSelectedLocation(this))
-        val selectedYear = 2019
-        val selectedWeek = 51
-        val selectedWeekDay = 0
+
+        val cal = Calendar.getInstance()
+        cal.time = currentDate
+        val selectedYear = cal.get(Calendar.YEAR)
+        val selectedWeek = cal.get(Calendar.WEEK_OF_YEAR)
+        val selectedWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1
 
         Request.getWeeklyMenu(selectedLocation, selectedYear, selectedWeek) {
             runOnUiThread {
@@ -139,5 +163,8 @@ class MenuListActivity : AppCompatActivity() {
 
         //set title correctly
         Locations.names[Locations.getSelectedLocation(this)]?.let { setTitle(it) }
+
+        //set the date correctly
+        currentDateView.text = SimpleDateFormat("EEEE, dd.MMMM.yyyy").format(currentDate)
     }
 }
