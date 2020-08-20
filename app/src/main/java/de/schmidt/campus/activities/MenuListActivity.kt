@@ -50,7 +50,7 @@ class MenuListActivity : AppCompatActivity() {
 
             val listener: DatePickerDialog.OnDateSetListener =
                 DatePickerDialog.OnDateSetListener() { _, year, month, dayOfMonth ->
-                    currentDate = GregorianCalendar(year, month - 1, dayOfMonth).time
+                    currentDate = GregorianCalendar(year, month, dayOfMonth).time
                     refresh()
                 }
 
