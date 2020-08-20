@@ -2,6 +2,8 @@ package de.schmidt.campus.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -83,6 +85,21 @@ class MenuListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         refresh()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                refresh()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun refresh() {

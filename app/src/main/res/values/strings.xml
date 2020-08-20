@@ -108,4 +108,5 @@
     <string name="short_stucafe_pasing">stucafe-pasing</string>
     <string name="short_fmi_bistro">fmi-bistro</string>
     <string name="short_ipp_bistro">ipp-bistro</string>
+    <string name="action_refresh_text">Refresh</string>
 </resources>
