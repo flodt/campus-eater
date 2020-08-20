@@ -28,18 +28,26 @@ class DishListViewAdapter constructor(
         //fill with dish data
         val dish: Dish = getItem(position) as Dish
 
-        if (Ingredients.containsAllergenWarnings(dish)) {
-            name?.apply {
-                //set the name with allergens
-                text = "❌ ${dish.name}"
-                paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        when {
+            Ingredients.containsAllergenWarnings(dish) -> {
+                name?.apply {
+                    //set the name with allergens
+                    text = "❌ ${dish.name}"
+                    //paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
+                view.setBackgroundColor(context.resources.getColor(R.color.background_shade))
             }
-            view.setBackgroundColor(context.resources.getColor(R.color.background_shade))
-        } else {
-            //remove strikethrough
-            name?.apply {
-                text = dish.name
-                paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            Ingredients.containsAllergenCautions(dish) -> {
+                name?.apply {
+                    text = "⚠️ ${dish.name}"
+                }
+            }
+            else -> {
+                //remove strikethrough
+                name?.apply {
+                    text = dish.name
+                    paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
             }
         }
 
