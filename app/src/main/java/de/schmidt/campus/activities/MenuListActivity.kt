@@ -43,27 +43,7 @@ class MenuListActivity : AppCompatActivity() {
 
         //setup fab for date choosing
         floatingActionButton = findViewById(R.id.menu_list_fab_date)
-        floatingActionButton.setOnClickListener {
-            //setup dialog with current date and time
-            val cal = Calendar.getInstance()
-            cal.time = currentDate
-
-            val listener: DatePickerDialog.OnDateSetListener =
-                DatePickerDialog.OnDateSetListener() { _, year, month, dayOfMonth ->
-                    currentDate = GregorianCalendar(year, month, dayOfMonth).time
-                    refresh()
-                }
-
-            val picker = DatePickerDialog(
-                this,
-                listener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            )
-
-            picker.show()
-        }
+        floatingActionButton.setOnClickListener { onFabInvokeDatePicker() }
 
         //setup swipe refresh layout
         swipeRefresh = findViewById(R.id.menu_list_swipe_refresh)
@@ -75,34 +55,58 @@ class MenuListActivity : AppCompatActivity() {
         adapter = DishListViewAdapter(this, dishes)
         listView.adapter = adapter
         listView.isClickable = true
-        listView.setOnItemClickListener { _, _, position, _ ->
-            //get the tapped dish
-            val dish = dishes[position]
-            val builder = StringBuilder()
-
-            builder.append(dish.name)
-            builder.append("\n")
-            builder.append(dish.ingredients.mapNotNull { Ingredients.emoji[it] }.joinToString(separator = ""))
-            builder.append("\n")
-
-            //get descriptions for all the ingredients
-            builder.append(
-                dish.ingredients.joinToString(separator = "\n") { short ->
-                    "• $short: " + getString(
-                        Ingredients.ingredients[short] ?: 0
-                    )
-                }
-            )
-
-            //todo figure out how to color this
-            builder.append(dish.ingredients.joinToString { Ingredients.flagAllergensIn(it, this) })
-
-            Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
-        }
+        listView.setOnItemClickListener { _, _, position, _ -> onDishClicked(position) }
 
         //todo set ingredients for allergen notes
         Ingredients.setAllergenWarnings(listOf("Mi"), this)
         Ingredients.setAllergenCautions(listOf("Sl"), this)
+    }
+
+    private fun onDishClicked(position: Int) {
+        //get the tapped dish
+        val dish = dishes[position]
+        val builder = StringBuilder()
+
+        builder.append(dish.name)
+        builder.append("\n")
+        builder.append(dish.ingredients.mapNotNull { Ingredients.emoji[it] }.joinToString(separator = ""))
+        builder.append("\n")
+
+        //get descriptions for all the ingredients
+        builder.append(
+            dish.ingredients.joinToString(separator = "\n") { short ->
+                "• $short: " + getString(
+                    Ingredients.ingredients[short] ?: 0
+                )
+            }
+        )
+
+        //todo figure out how to color this
+        builder.append(dish.ingredients.joinToString { Ingredients.flagAllergensIn(it, this) })
+
+        Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    private fun onFabInvokeDatePicker() {
+        //setup dialog with current date and time
+        val cal = Calendar.getInstance()
+        cal.time = currentDate
+
+        val listener: DatePickerDialog.OnDateSetListener =
+            DatePickerDialog.OnDateSetListener() { _, year, month, dayOfMonth ->
+                currentDate = GregorianCalendar(year, month, dayOfMonth).time
+                refresh()
+            }
+
+        val picker = DatePickerDialog(
+            this,
+            listener,
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+
+        picker.show()
     }
 
     override fun onResume() {
