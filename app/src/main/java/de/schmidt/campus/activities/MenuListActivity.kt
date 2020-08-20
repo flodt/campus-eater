@@ -47,10 +47,10 @@ class MenuListActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             cal.time = currentDate
 
-            val listener: DatePickerDialog.OnDateSetListener
-                    = DatePickerDialog.OnDateSetListener() { _, year, month, dayOfMonth ->
-                currentDate = GregorianCalendar(year, month - 1, dayOfMonth).time
-            }
+            val listener: DatePickerDialog.OnDateSetListener =
+                DatePickerDialog.OnDateSetListener() { _, year, month, dayOfMonth ->
+                    currentDate = GregorianCalendar(year, month - 1, dayOfMonth).time
+                }
 
             val picker = DatePickerDialog(
                 this,
@@ -136,8 +136,13 @@ class MenuListActivity : AppCompatActivity() {
 
         Request.getWeeklyMenu(selectedLocation, selectedYear, selectedWeek) {
             runOnUiThread {
-                updateUI(it.days[selectedWeekDay].dishes)
+                updateUI(it?.days?.get(selectedWeekDay)?.dishes ?: listOf())
                 swipeRefresh.isRefreshing = false
+
+                //display notice if we didn't get anything back
+                if (it == null) {
+                    Toast.makeText(this, R.string.error_no_data, Toast.LENGTH_SHORT).show()
+                }
             }
             Log.v("MenuListActivity", it.toString())
         }
