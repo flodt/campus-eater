@@ -43,6 +43,7 @@ class MenuListActivity : AppCompatActivity() {
 
         //setup swipe refresh layout
         swipeRefresh = findViewById(R.id.menu_list_swipe_refresh)
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent)
         swipeRefresh.setOnRefreshListener { refresh() }
 
         //setup ListView
@@ -76,7 +77,7 @@ class MenuListActivity : AppCompatActivity() {
 
         //todo set ingredients for allergen notes
         Ingredients.setAllergenWarnings(listOf("Mi"), this)
-        Ingredients.setAllergenCautions(listOf("Kn"), this)
+        Ingredients.setAllergenCautions(listOf("Sl"), this)
     }
 
     override fun onResume() {
@@ -105,6 +106,16 @@ class MenuListActivity : AppCompatActivity() {
         //update list view via adapter
         dishes.clear()
         dishes.addAll(newData)
+
+        //sort data according to allergen notices
+        dishes.sortBy {
+            when {
+                Ingredients.containsAllergenWarnings(it) -> 2
+                Ingredients.containsAllergenCautions(it) -> 1
+                else -> 0
+            }
+        }
+
         adapter.notifyDataSetChanged()
         listView.invalidateViews()
         listView.refreshDrawableState()
