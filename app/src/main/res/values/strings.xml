@@ -114,4 +114,5 @@
     <string name="action_set_allergy_cautions_text">Set allergen cautions…</string>
     <string name="action_set_allergy_warnings_text">Set allergen warnings…</string>
     <string name="set_location_title">Select mensa…</string>
+    <string name="set_allergen_warnings">Select allergen warnings…</string>
 </resources>

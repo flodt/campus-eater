@@ -4,12 +4,13 @@ import android.content.Context
 import de.schmidt.campus.R
 import de.schmidt.campus.utils.PREF_KEY
 import de.schmidt.campus.utils.colorWithHtml
+import java.util.*
 
 object Ingredients {
     private val allergenWarnings: MutableList<String> = mutableListOf()
     private val allergenCautions: MutableList<String> = mutableListOf()
 
-    val ingredients: Map<String, Int> = mapOf(
+    val ingredients: SortedMap<String, Int> = sortedMapOf(
         "GQB" to R.string.bavaria_quality,
         "MSC" to R.string.marine_stewardship,
         "1" to R.string.with_dyestuff,
@@ -117,6 +118,15 @@ object Ingredients {
         allergenWarnings.addAll(newData)
         saveWarningsToPrefs(context)
     }
+
+    fun updateStoreFromPrefs(context: Context) {
+        loadWarningsFromPrefs(context)
+        loadCautionsFromPrefs(context)
+    }
+
+    fun getAllergenWarnings(context: Context): List<String> = allergenWarnings.toList()
+
+    fun getAllergenCautions(context: Context): List<String> = allergenCautions.toList()
 
     fun setAllergenCautions(newData: List<String>, context: Context) {
         allergenCautions.clear()

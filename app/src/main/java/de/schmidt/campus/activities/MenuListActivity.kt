@@ -67,9 +67,7 @@ class MenuListActivity : AppCompatActivity() {
         listView.isClickable = true
         listView.setOnItemClickListener { _, _, position, _ -> onDishClicked(position) }
 
-        //todo set ingredients for allergen notes
-        Ingredients.setAllergenWarnings(listOf("Mi"), this)
-        Ingredients.setAllergenCautions(listOf("Kn"), this)
+        Ingredients.updateStoreFromPrefs(this)
     }
 
     private fun onDishClicked(position: Int) {
@@ -154,7 +152,39 @@ class MenuListActivity : AppCompatActivity() {
     }
 
     private fun onSetAllergyWarnings() {
-        TODO("Not yet implemented")
+        val described = Ingredients.ingredients.entries
+            .map { entry -> Pair(entry.key, getString(entry.value)) }
+            .map { entry -> "${entry.first} - ${entry.second}" }
+            .toTypedArray()
+
+        val checked: BooleanArray = Ingredients.ingredients.keys
+            .toList()
+            .map {
+                Ingredients.getAllergenWarnings(this).contains(it)
+            }.toBooleanArray()
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.set_allergen_warnings)
+            .setMultiChoiceItems(
+                described,
+                checked
+            ) { _, which, isChecked ->
+                checked[which] = isChecked
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("OK") { dialog, _ ->
+                //save the allergens
+                checked.mapIndexed { index, checked ->
+                    if (checked) Ingredients.ingredients.keys.toList()[index] else null
+                }
+                    .filterNotNull()
+                    .let { Ingredients.setAllergenWarnings(it, this) }
+
+                dialog.dismiss()
+                refresh()
+            }
+            .create()
+            .show()
     }
 
     private fun onSetLocation() {
