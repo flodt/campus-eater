@@ -16,6 +16,7 @@ import de.schmidt.campus.api.Dish
 import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request
+import de.schmidt.campus.utils.getOrDefault
 import de.schmidt.campus.view.DishListViewAdapter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -148,11 +149,12 @@ class MenuListActivity : AppCompatActivity() {
 
         Request.getWeeklyMenu(selectedLocation, selectedYear, selectedWeek) {
             runOnUiThread {
-                updateUI(it?.days?.get(selectedWeekDay)?.dishes ?: listOf())
+                val fetched = it?.days?.getOrDefault(selectedWeekDay, null)?.dishes ?: listOf()
+                updateUI(fetched)
                 swipeRefresh.isRefreshing = false
 
                 //display notice if we didn't get anything back
-                if (it == null) {
+                if (fetched.isEmpty()) {
                     Toast.makeText(this, R.string.error_no_data, Toast.LENGTH_SHORT).show()
                 }
             }
