@@ -8,4 +8,22 @@
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_refresh"
     />
+    <item
+            android:id="@+id/action_set_location"
+            android:title="@string/action_select_location_text"
+            app:showAsAction="ifRoom"
+            android:icon="@drawable/ic_location"
+    />
+    <item
+            android:id="@+id/action_set_allergy_warnings"
+            android:title="@string/action_set_allergy_warnings_text"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_warnings"
+    />
+    <item
+            android:id="@+id/action_set_allergy_cautions"
+            android:title="@string/action_set_allergy_cautions_text"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_caution"
+    />
 </menu>

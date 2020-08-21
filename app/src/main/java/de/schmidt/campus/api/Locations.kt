@@ -3,9 +3,10 @@ package de.schmidt.campus.api
 import android.content.Context
 import de.schmidt.campus.R
 import de.schmidt.campus.utils.PREF_KEY
+import java.util.*
 
 object Locations {
-    val names: Map<Int, Int> = mapOf(
+    val names: SortedMap<Int, Int> = sortedMapOf(
         R.string.short_mensa_arcisstr to R.string.full_mensa_arcisstr,
         R.string.short_mensa_garching to R.string.full_mensa_garching,
         R.string.short_mensa_leopoldstr to R.string.full_mensa_leopoldstr,

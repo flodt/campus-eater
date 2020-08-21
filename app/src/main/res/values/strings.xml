@@ -110,4 +110,8 @@
     <string name="short_ipp_bistro">ipp-bistro</string>
     <string name="action_refresh_text">Refresh</string>
     <string name="error_no_data">Hmm, there seems to be no menu available…</string>
+    <string name="action_select_location_text">Select location…</string>
+    <string name="action_set_allergy_cautions_text">Set allergen cautions…</string>
+    <string name="action_set_allergy_warnings_text">Set allergen warnings…</string>
+    <string name="set_location_title">Select mensa…</string>
 </resources>

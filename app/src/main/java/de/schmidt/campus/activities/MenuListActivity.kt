@@ -1,5 +1,6 @@
 package de.schmidt.campus.activities
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -132,8 +133,48 @@ class MenuListActivity : AppCompatActivity() {
                 refresh()
                 true
             }
+            R.id.action_set_location -> {
+                onSetLocation()
+                true
+            }
+            R.id.action_set_allergy_warnings -> {
+                onSetAllergyWarnings()
+                true
+            }
+            R.id.action_set_allergy_cautions -> {
+                onSetAllergyCautions()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun onSetAllergyCautions() {
+        TODO("Not yet implemented")
+    }
+
+    private fun onSetAllergyWarnings() {
+        TODO("Not yet implemented")
+    }
+
+    private fun onSetLocation() {
+        var selectedLocationId = Locations.getSelectedLocation(this)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.set_location_title)
+            .setSingleChoiceItems(
+                Locations.names.values.toTypedArray().map { getString(it) }.toTypedArray(),
+                Locations.names.keys.toTypedArray().indexOf(selectedLocationId)
+            ) { _, which ->
+                selectedLocationId = Locations.names.keys.toTypedArray()[which]
+            }
+            .setNegativeButton("Dismiss") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("OK") { dialog, _ ->
+                Locations.setSelectedLocation(selectedLocationId, this)
+                dialog.dismiss()
+                refresh()
+            }
+            .create()
+            .show()
     }
 
     private fun refresh() {
