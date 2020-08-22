@@ -66,8 +66,46 @@ class MenuListActivity : AppCompatActivity() {
         listView.adapter = adapter
         listView.isClickable = true
         listView.setOnItemClickListener { _, _, position, _ -> onDishClicked(position) }
+        listView.isLongClickable = true
+        listView.setOnItemLongClickListener { _, _, position, _ -> onDishLongClicked(position) }
 
         Ingredients.updateStoreFromPrefs(this)
+    }
+
+    private fun onDishLongClicked(position: Int): Boolean {
+        val dish = dishes[position]
+        val builder = StringBuilder()
+
+        builder.append(dish.ingredients.joinToString())
+
+        if (Ingredients.containsAllergenWarnings(dish)) {
+            builder.append("\n\nWarnings:\n")
+            builder.append(
+                dish.ingredients
+                    .filter { Ingredients.getAllergenWarnings(this).contains(it) }
+                    .joinToString(separator = "\n") { short ->
+                        "• $short: " + getString(
+                            Ingredients.ingredients[short] ?: 0
+                        )
+                    }
+            )
+        }
+
+        if (Ingredients.containsAllergenCautions(dish)) {
+            builder.append("\n\nCautions:\n")
+            builder.append(
+                dish.ingredients
+                    .filter { Ingredients.getAllergenCautions(this).contains(it) }
+                    .joinToString(separator = "\n") { short ->
+                        "• $short: " + getString(
+                            Ingredients.ingredients[short] ?: 0
+                        )
+                    }
+            )
+        }
+
+        Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show()
+        return true
     }
 
     private fun onDishClicked(position: Int) {
