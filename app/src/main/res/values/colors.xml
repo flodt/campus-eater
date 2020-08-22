@@ -14,4 +14,6 @@
     <color name="background_shade_dark">#dcdcdc</color>
     <color name="allergen_warning">#E53935</color>
     <color name="allergen_caution">#FF8F00</color>
+    <color name="action_bar">@color/colorPrimary</color>
+    <color name="status_bar">@color/colorPrimaryDark</color>
 </resources>

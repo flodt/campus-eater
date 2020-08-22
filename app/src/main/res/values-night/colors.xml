@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="action_bar">#212121</color>
+    <color name="status_bar">#151515</color>
+    <color name="background">#303030</color>
+    <color name="background_shade">#262626</color>
+    <color name="background_shade_dark">#232323</color>
+    <color name="colorTextPrimary">#ffffff</color>
+    <color name="colorTextGrey">#9a9a9a</color>
+    <color name="colorTextSecondary">#000000</color>
+</resources>

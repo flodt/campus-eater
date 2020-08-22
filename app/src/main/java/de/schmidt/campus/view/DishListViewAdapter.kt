@@ -21,6 +21,7 @@ class DishListViewAdapter constructor(
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.food_list_item, null)
+        view.setBackgroundColor(context.getColor(R.color.background))
 
         //fields
         val name = view.findViewById<TextView>(R.id.food_list_item_name)

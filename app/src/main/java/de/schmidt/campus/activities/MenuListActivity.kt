@@ -2,6 +2,7 @@ package de.schmidt.campus.activities
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -36,6 +37,11 @@ class MenuListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //apply mode-sensitive colors
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.action_bar)))
+        window?.statusBarColor = getColor(R.color.status_bar)
+
         title = "Campus"
         setContentView(R.layout.activity_menu_list)
 
