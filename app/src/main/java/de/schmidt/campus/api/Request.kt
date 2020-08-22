@@ -1,4 +1,5 @@
 package de.schmidt.campus.api
+import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
 import java.lang.Exception
@@ -7,7 +8,7 @@ import kotlin.concurrent.thread
 
 object Request {
     fun getWeeklyMenu(mensa: String, year: Int, weekNumber: Int, callback: (WeekMenu?) -> Unit) {
-        //url: https://srehwald.github.io/eat-api/<location>/<year>/<week-number>.json
+        //todo new API url: https://github.com/TUM-Dev/eat-api
         val url: String = "https://srehwald.github.io/eat-api/$mensa/$year/$weekNumber.json"
 
         //do the network request
