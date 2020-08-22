@@ -147,21 +147,15 @@ class MenuListActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSetAllergyCautions() {
-        TODO("Not yet implemented")
-    }
-
-    private fun onSetAllergyWarnings() {
-        val described = Ingredients.ingredients.entries
-            .map { entry -> Pair(entry.key, getString(entry.value)) }
-            .map { entry -> "${entry.first} - ${entry.second}" }
-            .toTypedArray()
-
+    private fun onUpdateAllergySettings(elements: List<String>, updater: (List<String>) -> Unit) {
         val checked: BooleanArray = Ingredients.ingredients.keys
             .toList()
-            .map {
-                Ingredients.getAllergenWarnings(this).contains(it)
-            }.toBooleanArray()
+            .map { elements.contains(it) }
+            .toBooleanArray()
+
+        val described = Ingredients.ingredients.entries
+            .map { it.key + " - " + getString(it.value) }
+            .toTypedArray()
 
         AlertDialog.Builder(this)
             .setTitle(R.string.set_allergen_warnings)
@@ -172,19 +166,36 @@ class MenuListActivity : AppCompatActivity() {
                 checked[which] = isChecked
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNeutralButton("Clear all") { dialog, _ ->
+                dialog.dismiss()
+                updater(listOf())
+                refresh()
+            }
             .setPositiveButton("OK") { dialog, _ ->
                 //save the allergens
                 checked.mapIndexed { index, checked ->
                     if (checked) Ingredients.ingredients.keys.toList()[index] else null
                 }
                     .filterNotNull()
-                    .let { Ingredients.setAllergenWarnings(it, this) }
+                    .let { updater(it) }
 
                 dialog.dismiss()
                 refresh()
             }
             .create()
             .show()
+    }
+
+    private fun onSetAllergyCautions() {
+        onUpdateAllergySettings(Ingredients.getAllergenCautions(this)) { newCautions ->
+            Ingredients.setAllergenCautions(newCautions, this)
+        }
+    }
+
+    private fun onSetAllergyWarnings() {
+        onUpdateAllergySettings(Ingredients.getAllergenWarnings(this)) { newWarnings ->
+            Ingredients.setAllergenWarnings(newWarnings, this)
+        }
     }
 
     private fun onSetLocation() {
