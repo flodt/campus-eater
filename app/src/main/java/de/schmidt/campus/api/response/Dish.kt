@@ -1,4 +1,4 @@
-package de.schmidt.campus.api
+package de.schmidt.campus.api.response
 
 
 import com.google.gson.annotations.SerializedName

@@ -2,6 +2,7 @@ package de.schmidt.campus.api
 
 import android.content.Context
 import de.schmidt.campus.R
+import de.schmidt.campus.api.response.Dish
 import de.schmidt.campus.utils.PREF_KEY
 import de.schmidt.campus.utils.colorWithHtml
 import java.util.*

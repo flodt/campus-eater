@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import de.schmidt.campus.R
-import de.schmidt.campus.api.Dish
+import de.schmidt.campus.api.response.Dish
 import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request

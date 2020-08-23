@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import de.schmidt.campus.R
-import de.schmidt.campus.api.Dish
+import de.schmidt.campus.api.response.Dish
 import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.utils.orIfBlank
 
