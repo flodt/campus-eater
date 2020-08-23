@@ -115,4 +115,11 @@
     <string name="action_set_allergy_warnings_text">Set allergen warnings…</string>
     <string name="set_location_title">Select mensa…</string>
     <string name="set_allergen_warnings">Select allergen warnings…</string>
+    <string name="example_category">Pasta</string>
+    <string name="food_category_others">Weitere</string>
+    <string name="visit_role_student">Student</string>
+    <string name="visit_role_guest">Guest</string>
+    <string name="visit_role_staff">Staff</string>
+    <string name="example_price">1.0 € +\n1.1 € / 100 g</string>
+    <string name="pref_key_price_role">PRICE_ROLE</string>
 </resources>

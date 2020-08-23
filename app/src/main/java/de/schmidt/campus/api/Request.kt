@@ -7,8 +7,8 @@ import kotlin.concurrent.thread
 
 object Request {
     fun getWeeklyMenu(mensa: String, year: Int, weekNumber: Int, callback: (WeekMenu?) -> Unit) {
-        //https://tum-dev.github.io/eat-api/<loc>/<year>/<day>.json
-        val url: String = "https://srehwald.github.io/eat-api/$mensa/$year/$weekNumber.json"
+        //https://tum-dev.github.io/eat-api/<loc>/<year>/<week>.json
+        val url = "https://tum-dev.github.io/eat-api/$mensa/$year/$weekNumber.json"
 
         //do the network request
         thread {

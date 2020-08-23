@@ -7,7 +7,7 @@ data class WeekMenu(
     @SerializedName("days")
     val days: List<Day> = listOf(),
     @SerializedName("number")
-    val number: Int = 0, // 51
+    val number: Int = 0, // 6
     @SerializedName("year")
-    val year: Int = 0 // 2019
+    val year: Int = 0 // 2020
 )

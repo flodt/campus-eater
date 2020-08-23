@@ -26,6 +26,8 @@ class DishListViewAdapter constructor(
         //fields
         val name = view.findViewById<TextView>(R.id.food_list_item_name)
         val ingredients = view.findViewById<TextView>(R.id.food_list_item_ingredients)
+        val category = view.findViewById<TextView>(R.id.food_list_item_category)
+        val price = view.findViewById<TextView>(R.id.food_list_item_price)
 
         //fill with dish data
         val dish: Dish = getItem(position) as Dish
@@ -62,6 +64,11 @@ class DishListViewAdapter constructor(
             .orIfBlank("–")
 
         ingredients?.text = Html.fromHtml(emojified)
+
+        category?.text = dish.dishType.orIfBlank(context.getString(R.string.food_category_others))
+
+        //set price
+        price?.text = "${dish.prices.getSelectedBasePrice(context, dish)} € +\n${dish.prices.getSelectedUnitPrice(context, dish)} € / ${dish.prices.getSelectedUnit(context, dish)}"
 
         return view
     }
