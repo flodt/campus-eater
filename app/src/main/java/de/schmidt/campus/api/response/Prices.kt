@@ -26,29 +26,11 @@ data class Prices(
             .getInt(context.getString(R.string.pref_key_price_role), R.string.visit_role_student)
     }
 
-    fun getSelectedBasePrice(context: Context, dish: Dish): Double {
+    fun getSelectedBundle(context: Context): PriceBundle {
         return when (loadRoleFromPrefs(context)) {
-            R.string.visit_role_student -> dish.prices.students.basePrice
-            R.string.visit_role_guest -> dish.prices.guests.basePrice
-            R.string.visit_role_staff -> dish.prices.staff.basePrice
-            else -> throw IllegalStateException("Illegal category string")
-        }
-    }
-
-    fun getSelectedUnitPrice(context: Context, dish: Dish): Double {
-        return when (loadRoleFromPrefs(context)) {
-            R.string.visit_role_student -> dish.prices.students.pricePerUnit
-            R.string.visit_role_guest -> dish.prices.guests.pricePerUnit
-            R.string.visit_role_staff -> dish.prices.staff.pricePerUnit
-            else -> throw IllegalStateException("Illegal category string")
-        }
-    }
-
-    fun getSelectedUnit(context: Context, dish: Dish): String {
-        return when (loadRoleFromPrefs(context)) {
-            R.string.visit_role_student -> dish.prices.students.unit
-            R.string.visit_role_guest -> dish.prices.guests.unit
-            R.string.visit_role_staff -> dish.prices.staff.unit
+            R.string.visit_role_student -> students
+            R.string.visit_role_guest -> guests
+            R.string.visit_role_staff -> staff
             else -> throw IllegalStateException("Illegal category string")
         }
     }

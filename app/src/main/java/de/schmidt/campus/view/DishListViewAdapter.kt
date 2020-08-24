@@ -12,6 +12,7 @@ import android.widget.TextView
 import de.schmidt.campus.R
 import de.schmidt.campus.api.response.Dish
 import de.schmidt.campus.api.Ingredients
+import de.schmidt.campus.utils.appendIfNotBlank
 import de.schmidt.campus.utils.orIfBlank
 
 class DishListViewAdapter constructor(
@@ -68,7 +69,13 @@ class DishListViewAdapter constructor(
         category?.text = dish.dishType.orIfBlank(context.getString(R.string.food_category_others))
 
         //set price
-        price?.text = "${dish.prices.getSelectedBasePrice(context, dish)} € +\n${dish.prices.getSelectedUnitPrice(context, dish)} € / ${dish.prices.getSelectedUnit(context, dish)}"
+        val bundle = dish.prices.getSelectedBundle(context)
+        var formatted = if (bundle.basePrice != 0.0) "${bundle.basePrice} €" else ""
+        if (bundle.pricePerUnit != 0.0 && bundle.unit != "") {
+            formatted = formatted.appendIfNotBlank(" +\n")
+            formatted += "${bundle.pricePerUnit} € / ${bundle.unit}"
+        }
+        price?.text = formatted
 
         return view
     }

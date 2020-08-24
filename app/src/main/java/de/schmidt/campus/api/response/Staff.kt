@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Staff(
     @SerializedName("base_price")
-    val basePrice: Double = 0.0, // 1.0
+    override val basePrice: Double = 0.0, // 1.0
     @SerializedName("price_per_unit")
-    val pricePerUnit: Double = 0.0, // 0.9
+    override val pricePerUnit: Double = 0.0, // 0.9
     @SerializedName("unit")
-    val unit: String = "" // 100g
-)
+    override val unit: String = "" // 100g
+) : PriceBundle()
