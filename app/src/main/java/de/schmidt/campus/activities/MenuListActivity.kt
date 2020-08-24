@@ -19,7 +19,6 @@ import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request
 import de.schmidt.campus.api.Roles
-import de.schmidt.campus.utils.getOrDefault
 import de.schmidt.campus.view.DishListViewAdapter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -298,11 +297,11 @@ class MenuListActivity : AppCompatActivity() {
         cal.time = currentDate
         val selectedYear = cal.get(Calendar.YEAR)
         val selectedWeek = cal.get(Calendar.WEEK_OF_YEAR)
-        val selectedWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1
+        val formattedDate = SimpleDateFormat("yyyy-MM-dd").format(currentDate)
 
         Request.getWeeklyMenu(selectedLocation, selectedYear, selectedWeek) {
             runOnUiThread {
-                val fetched = it?.days?.getOrDefault(selectedWeekDay, null)?.dishes ?: listOf()
+                val fetched = it?.days?.find { day -> day.date == formattedDate }?.dishes ?: listOf()
                 updateUI(fetched)
                 swipeRefresh.isRefreshing = false
 
