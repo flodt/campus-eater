@@ -122,4 +122,6 @@
     <string name="visit_role_staff">Staff</string>
     <string name="example_price">1.0 € +\n1.1 € / 100 g</string>
     <string name="pref_key_price_role">PRICE_ROLE</string>
+    <string name="action_set_price_role_text">Select price category…</string>
+    <string name="set_role_title">Select price role…</string>
 </resources>

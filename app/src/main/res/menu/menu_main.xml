@@ -26,4 +26,10 @@
             app:showAsAction="never"
             android:icon="@drawable/ic_caution"
     />
+    <item
+            android:id="@+id/action_set_price_role"
+            android:title="@string/action_set_price_role_text"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_money"
+    />
 </menu>

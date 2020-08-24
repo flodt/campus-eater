@@ -18,6 +18,7 @@ import de.schmidt.campus.api.response.Dish
 import de.schmidt.campus.api.Ingredients
 import de.schmidt.campus.api.Locations
 import de.schmidt.campus.api.Request
+import de.schmidt.campus.api.Roles
 import de.schmidt.campus.utils.getOrDefault
 import de.schmidt.campus.view.DishListViewAdapter
 import java.text.SimpleDateFormat
@@ -187,8 +188,34 @@ class MenuListActivity : AppCompatActivity() {
                 onSetAllergyCautions()
                 true
             }
+            R.id.action_set_price_role -> {
+                onSetPriceRole()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun onSetPriceRole() {
+        val items = listOf(R.string.visit_role_student, R.string.visit_role_staff, R.string.visit_role_guest)
+        var selectedPriceRoleId = Roles.loadRoleFromPrefs(this)
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.set_role_title)
+            .setSingleChoiceItems(
+                items.map { getString(it) }.toTypedArray(),
+                items.indexOf(selectedPriceRoleId)
+            ) { _, which ->
+                selectedPriceRoleId = items[which]
+            }
+            .setNegativeButton("Dismiss") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("OK") { dialog, _ ->
+                Roles.saveRoleToPrefs(this, selectedPriceRoleId)
+                dialog.dismiss()
+                refresh()
+            }
+            .create()
+            .show()
     }
 
     private fun onUpdateAllergySettings(elements: List<String>, updater: (List<String>) -> Unit) {
